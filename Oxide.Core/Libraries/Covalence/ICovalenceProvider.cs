@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace Oxide.Core.Libraries.Covalence
 {
     /// <summary>
@@ -15,5 +11,10 @@ namespace Oxide.Core.Libraries.Covalence
         /// </summary>
         string GameName { get; }
 
+        /// <summary>
+        /// Creates the game-specific server object
+        /// </summary>
+        /// <returns></returns>
+        IServer CreateServer();
     }
 }

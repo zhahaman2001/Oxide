@@ -13,5 +13,14 @@ namespace Oxide.Rust.Libraries.Covalence
         /// Gets the name of the game for which this provider provides
         /// </summary>
         public string GameName { get { return "Rust"; } }
+
+        /// <summary>
+        /// Creates the game-specific server object
+        /// </summary>
+        /// <returns></returns>
+        public IServer CreateServer()
+        {
+            return new RustServer();
+        }
     }
 }

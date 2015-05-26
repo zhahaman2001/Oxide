@@ -17,6 +17,11 @@ namespace Oxide.Core.Libraries.Covalence
         /// </summary>
         public override bool IsGlobal { get { return false; } }
 
+        /// <summary>
+        /// Gets the server mediator
+        /// </summary>
+        public IServer Server { get; private set; }
+
         // The provider
         private ICovalenceProvider provider;
 

@@ -83,6 +83,12 @@ namespace Oxide.Core.Libraries.Covalence
         /// </summary>
         TimeSpan BanTimeRemaining { get; }
 
+        /// <summary>
+        /// Runs the specified console command on this player's client
+        /// </summary>
+        /// <param name="command"></param>
+        void RunCommand(string command);
+
         #endregion
 
     }
