@@ -6,6 +6,7 @@ using System.Linq;
 using Oxide.Core.Configuration;
 using Oxide.Core.Extensions;
 using Oxide.Core.Libraries;
+using Oxide.Core.Libraries.Covalence;
 using Oxide.Core.Logging;
 using Oxide.Core.Plugins;
 using Oxide.Core.ServerConsole;
@@ -152,6 +153,9 @@ namespace Oxide.Core
             // Load all extensions
             LogInfo("Loading extensions...");
             extensionmanager.LoadAllExtensions(ExtensionDirectory);
+
+            // Load covalence library after extensions (as it depends on things from within an ext)
+            extensionmanager.RegisterLibrary("Covalence", new Covalence());
 
             // Load all watchers
             foreach (var ext in extensionmanager.GetAllExtensions())
