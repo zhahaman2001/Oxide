@@ -17,6 +17,11 @@ namespace Oxide.Core.Libraries.Covalence
         /// </summary>
         string UniqueID { get; }
 
+        /// <summary>
+        /// Gets the live player if this player is connected
+        /// </summary>
+        ILivePlayer ConnectedPlayer { get; }
+
         #region Permissions
 
         /// <summary>
@@ -82,12 +87,6 @@ namespace Oxide.Core.Libraries.Covalence
         /// Gets the amount of time remaining on this player's ban
         /// </summary>
         TimeSpan BanTimeRemaining { get; }
-
-        /// <summary>
-        /// Runs the specified console command on this player's client
-        /// </summary>
-        /// <param name="command"></param>
-        void RunCommand(string command);
 
         #endregion
 

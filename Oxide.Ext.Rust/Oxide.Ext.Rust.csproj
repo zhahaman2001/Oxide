@@ -44,6 +44,8 @@
   <ItemGroup>
     <Compile Include="Libraries\Command.cs" />
     <Compile Include="Libraries\Covalence\RustCovalenceProvider.cs" />
+    <Compile Include="Libraries\Covalence\RustPlayer.cs" />
+    <Compile Include="Libraries\Covalence\RustPlayerManager.cs" />
     <Compile Include="Libraries\Covalence\RustServer.cs" />
     <Compile Include="Libraries\Rust.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

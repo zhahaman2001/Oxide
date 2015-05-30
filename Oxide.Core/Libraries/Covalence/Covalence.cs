@@ -23,6 +23,12 @@ namespace Oxide.Core.Libraries.Covalence
         [LibraryProperty("Server")]
         public IServer Server { get; private set; }
 
+        /// <summary>
+        /// Gets the player manager mediator
+        /// </summary>
+        [LibraryProperty("Players")]
+        public IPlayerManager Players { get; private set; }
+
         // The provider
         private ICovalenceProvider provider;
 
@@ -86,6 +92,7 @@ namespace Oxide.Core.Libraries.Covalence
 
             // Create mediators
             Server = provider.CreateServer();
+            Players = provider.CreatePlayerManager();
 
             // Log
             logger.Write(LogType.Info, "Using Covalence provider for game '{0}'", provider.GameName);

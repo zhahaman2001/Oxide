@@ -16,5 +16,11 @@ namespace Oxide.Core.Libraries.Covalence
         /// </summary>
         /// <returns></returns>
         IServer CreateServer();
+
+        /// <summary>
+        /// Creates the game-specific player manager object
+        /// </summary>
+        /// <returns></returns>
+        IPlayerManager CreatePlayerManager();
     }
 }

@@ -729,6 +729,9 @@ namespace Oxide.Rust.Plugins
                 // Add player to default group
                 permission.AddUserGroup(userId, DefaultGroups[authLevel]);
             }
+
+            // Let covalence know
+            Oxide.Rust.Libraries.Covalence.RustCovalenceProvider.Instance.PlayerManager.NotifyPlayerJoin(player.net.connection.userid, player.displayName);
         }
 
         /// <summary>

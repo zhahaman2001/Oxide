@@ -48,6 +48,12 @@ namespace Oxide.Core.Libraries.Covalence
         /// <param name="message"></param>
         void SendChatMessage(string message);
 
+        /// <summary>
+        /// Runs the specified console command on this player's client
+        /// </summary>
+        /// <param name="command"></param>
+        void RunCommand(string command);
+
         #endregion
     }
 }
