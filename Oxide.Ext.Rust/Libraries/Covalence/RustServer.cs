@@ -13,17 +13,41 @@ namespace Oxide.Rust.Libraries.Covalence
         /// <summary>
         /// Gets the public-facing name of the server
         /// </summary>
-        public string Name { get; private set; }
+        public string Name
+        {
+            get
+            {
+                return server.identity;
+            }
+        }
 
         /// <summary>
         /// Gets the public-facing IP address of the server, if known
         /// </summary>
-        public IPAddress Address { get; private set; }
+        public IPAddress Address
+        {
+            get
+            {
+                /*local ip = Steamworks.SteamGameServer.GetPublicIP()
+                ("%s.%s.%s.%s"):format(bit32.rshift(ip, 24), bit32.band(bit32.rshift(ip, 16), 0xff), bit32.band(bit32.rshift(ip, 8), 0xff), bit32.band(ip, 0xff))*/
+                uint ip = Steamworks.SteamGameServer.GetPublicIP();
+                if (ip == 0)
+                    return null;
+                else
+                    return new IPAddress(ip >> 24 | ((ip & 0xff0000) >> 8) | ((ip & 0xff00) << 8) | ((ip & 0xff) << 24));
+            }
+        }
 
         /// <summary>
         /// Gets the public-facing network port of the server, if known
         /// </summary>
-        public ushort Port { get; private set; }
+        public ushort Port
+        {
+            get
+            {
+                return (ushort)server.port;
+            }
+        }
 
         private ServerMgr mgr;
 
@@ -33,7 +57,6 @@ namespace Oxide.Rust.Libraries.Covalence
         public RustServer()
         {
             mgr = ServerMgr.Instance;
-            
         }
 
         #region Console
@@ -42,18 +65,20 @@ namespace Oxide.Rust.Libraries.Covalence
         /// Prints the specified message to the server console
         /// </summary>
         /// <param name="message"></param>
-        public void PrintToConsole(string message)
+        public void Print(string message)
         {
-
+            //logger.Write(LogType.Info, message != null ? message.ToString() : "null");
+            UnityEngine.Debug.Log(message);
         }
 
         /// <summary>
         /// Runs the specified server command
         /// </summary>
         /// <param name="cmd"></param>
-        public void RunServerCommand(string cmd)
+        /// <param name="args"></param>
+        public void RunCommand(string command, params object[] args)
         {
-            
+            ConsoleSystem.Run.Server.Normal(command, args);
         }
 
         #endregion

@@ -30,13 +30,14 @@ namespace Oxide.Core.Libraries.Covalence
         /// Prints the specified message to the server console
         /// </summary>
         /// <param name="message"></param>
-        void PrintToConsole(string message);
+        void Print(string message);
 
         /// <summary>
         /// Runs the specified server command
         /// </summary>
         /// <param name="cmd"></param>
-        void RunServerCommand(string cmd);
+        /// <param name="args"></param>
+        void RunCommand(string command, params object[] args);
 
         #endregion
     }

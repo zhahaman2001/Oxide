@@ -20,6 +20,7 @@ namespace Oxide.Core.Libraries.Covalence
         /// <summary>
         /// Gets the server mediator
         /// </summary>
+        [LibraryProperty("Server")]
         public IServer Server { get; private set; }
 
         // The provider
@@ -35,7 +36,13 @@ namespace Oxide.Core.Libraries.Covalence
         {
             // Get logger
             logger = Interface.GetMod().RootLogger;
+        }
 
+        /// <summary>
+        /// Initialises the Covalence library
+        /// </summary>
+        internal void Initialise()
+        {
             // Search for all provider types
             Type baseType = typeof(ICovalenceProvider);
             List<Type> candidates = new List<Type>(
@@ -76,6 +83,9 @@ namespace Oxide.Core.Libraries.Covalence
                 logger.Write(LogType.Warning, "{0}", ex);
                 return;
             }
+
+            // Create mediators
+            Server = provider.CreateServer();
 
             // Log
             logger.Write(LogType.Info, "Using Covalence provider for game '{0}'", provider.GameName);

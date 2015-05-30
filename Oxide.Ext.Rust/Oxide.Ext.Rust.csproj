@@ -100,4 +100,7 @@
     <Copy SourceFiles="@(PatchedFiles)" DestinationFiles="@(PatchedFiles->'$(BundleDir)\$(ManagedDir)\%(Filename)%(Extension)')" ContinueOnError="false" SkipUnchangedFiles="false" />
     <Copy SourceFiles="@(ConfigFiles)" DestinationFiles="@(ConfigFiles->'$(BundleDir)\$(GameName)\%(Filename)%(Extension)')" ContinueOnError="false" SkipUnchangedFiles="false" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(TargetPath)" "D:\Oxide\Covalence\Rust Server\RustDedicated_Data\Managed"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

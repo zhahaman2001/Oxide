@@ -70,6 +70,7 @@ namespace Oxide.Core
         // Various libraries
         private Timer libtimer;
         private WebRequests libwebrequests;
+        private Covalence covalence;
 
         // Extension implemented delegates
         private Func<float> getTimeSinceStartup;
@@ -149,13 +150,14 @@ namespace Oxide.Core
             extensionmanager.RegisterLibrary("Permission", new Permission());
             extensionmanager.RegisterLibrary("Plugins", new Libraries.Plugins(RootPluginManager));
             extensionmanager.RegisterLibrary("WebRequests", libwebrequests = new WebRequests());
+            extensionmanager.RegisterLibrary("Covalence", covalence = new Covalence());
 
             // Load all extensions
             LogInfo("Loading extensions...");
             extensionmanager.LoadAllExtensions(ExtensionDirectory);
 
-            // Load covalence library after extensions (as it depends on things from within an ext)
-            extensionmanager.RegisterLibrary("Covalence", new Covalence());
+            // Initialise covalence library after extensions (as it depends on things from within an ext)
+            covalence.Initialise();
 
             // Load all watchers
             foreach (var ext in extensionmanager.GetAllExtensions())
