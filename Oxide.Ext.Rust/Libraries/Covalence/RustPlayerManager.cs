@@ -85,7 +85,7 @@ namespace Oxide.Rust.Libraries.Covalence
         /// </summary>
         /// <param name="uniqueID"></param>
         /// <returns></returns>
-        public IPlayer GetOfflinePlayer(string uniqueID)
+        public IPlayer GetPlayer(string uniqueID)
         {
             RustPlayer player;
             if (players.TryGetValue(uniqueID, out player))
@@ -98,7 +98,7 @@ namespace Oxide.Rust.Libraries.Covalence
         /// Gets all offline players
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<IPlayer> GetAllOfflinePlayers()
+        public IEnumerable<IPlayer> GetAllPlayers()
         {
             return players.Values.Cast<IPlayer>();
         }
@@ -108,66 +108,7 @@ namespace Oxide.Rust.Libraries.Covalence
         /// </summary>
         /// <param name="partialName"></param>
         /// <returns></returns>
-        public IPlayer FindOfflinePlayer(string partialName)
-        {
-            // Pull 1 item and ONLY 1 item
-            // TODO: If there's an exact match, just return that regardless?
-            // That, or sort the sequence by how close the match is and return the best item
-            try
-            {
-                return FindOfflinePlayers(partialName).Single();
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Finds any number of offline players given a partial name
-        /// </summary>
-        /// <param name="partialName"></param>
-        /// <returns></returns>
-        public IEnumerable<IPlayer> FindOfflinePlayers(string partialName)
-        {
-            return players.Values
-                .Where((p) => p.Nickname.Contains(partialName))
-                .Cast<IPlayer>();
-        }
-
-        #endregion
-
-        #region Online Players
-
-        /// <summary>
-        /// Gets an online player given their unique ID
-        /// </summary>
-        /// <param name="uniqueID"></param>
-        /// <returns></returns>
-        public ILivePlayer GetPlayer(string uniqueID)
-        {
-            RustLivePlayer player;
-            if (livePlayers.TryGetValue(uniqueID, out player))
-                return player;
-            else
-                return null;
-        }
-
-        /// <summary>
-        /// Gets all online players
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<ILivePlayer> GetAllPlayers()
-        {
-            return livePlayers.Values.Cast<ILivePlayer>();
-        }
-
-        /// <summary>
-        /// Finds a single online player given a partial name (wildcards accepted, multiple matches returns null)
-        /// </summary>
-        /// <param name="partialName"></param>
-        /// <returns></returns>
-        public ILivePlayer FindPlayer(string partialName)
+        public IPlayer FindPlayer(string partialName)
         {
             // Pull 1 item and ONLY 1 item
             // TODO: If there's an exact match, just return that regardless?
@@ -183,11 +124,70 @@ namespace Oxide.Rust.Libraries.Covalence
         }
 
         /// <summary>
+        /// Finds any number of offline players given a partial name
+        /// </summary>
+        /// <param name="partialName"></param>
+        /// <returns></returns>
+        public IEnumerable<IPlayer> FindPlayers(string partialName)
+        {
+            return players.Values
+                .Where((p) => p.Nickname.Contains(partialName))
+                .Cast<IPlayer>();
+        }
+
+        #endregion
+
+        #region Online Players
+
+        /// <summary>
+        /// Gets an online player given their unique ID
+        /// </summary>
+        /// <param name="uniqueID"></param>
+        /// <returns></returns>
+        public ILivePlayer GetOnlinePlayer(string uniqueID)
+        {
+            RustLivePlayer player;
+            if (livePlayers.TryGetValue(uniqueID, out player))
+                return player;
+            else
+                return null;
+        }
+
+        /// <summary>
+        /// Gets all online players
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ILivePlayer> GetAllOnlinePlayers()
+        {
+            return livePlayers.Values.Cast<ILivePlayer>();
+        }
+
+        /// <summary>
+        /// Finds a single online player given a partial name (wildcards accepted, multiple matches returns null)
+        /// </summary>
+        /// <param name="partialName"></param>
+        /// <returns></returns>
+        public ILivePlayer FindOnlinePlayer(string partialName)
+        {
+            // Pull 1 item and ONLY 1 item
+            // TODO: If there's an exact match, just return that regardless?
+            // That, or sort the sequence by how close the match is and return the best item
+            try
+            {
+                return FindOnlinePlayers(partialName).Single();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Finds any number of online players given a partial name (wildcards accepted)
         /// </summary>
         /// <param name="partialName"></param>
         /// <returns></returns>
-        public IEnumerable<ILivePlayer> FindPlayers(string partialName)
+        public IEnumerable<ILivePlayer> FindOnlinePlayers(string partialName)
         {
             return livePlayers.Values
                 .Where((p) => p.BasePlayer.Nickname.Contains(partialName))

@@ -22,5 +22,11 @@ namespace Oxide.Core.Libraries.Covalence
         /// </summary>
         /// <returns></returns>
         IPlayerManager CreatePlayerManager();
+
+        /// <summary>
+        /// Creates the game-specific command system provider object
+        /// </summary>
+        /// <returns></returns>
+        ICommandSystemProvider CreateCommandSystemProvider();
     }
 }

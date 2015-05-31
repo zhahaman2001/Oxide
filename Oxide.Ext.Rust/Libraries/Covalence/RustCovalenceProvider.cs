@@ -48,5 +48,14 @@ namespace Oxide.Rust.Libraries.Covalence
             PlayerManager.Initialise();
             return PlayerManager;
         }
+
+        /// <summary>
+        /// Creates the game-specific command system provider object
+        /// </summary>
+        /// <returns></returns>
+        public ICommandSystemProvider CreateCommandSystemProvider()
+        {
+            return new RustCommandSystemProvider();
+        }
     }
 }

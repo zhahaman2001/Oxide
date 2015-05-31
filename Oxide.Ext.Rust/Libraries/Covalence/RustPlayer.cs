@@ -26,7 +26,7 @@ namespace Oxide.Rust.Libraries.Covalence
         /// <summary>
         /// Gets the live player if this player is connected
         /// </summary>
-        public ILivePlayer ConnectedPlayer { get { return RustCovalenceProvider.Instance.PlayerManager.GetPlayer(UniqueID); } }
+        public ILivePlayer ConnectedPlayer { get { return RustCovalenceProvider.Instance.PlayerManager.GetOnlinePlayer(UniqueID); } }
 
         private ulong steamid;
 

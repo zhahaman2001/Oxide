@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Oxide.Core.Logging;
+using Oxide.Core.Plugins;
 
 namespace Oxide.Core.Libraries.Covalence
 {
@@ -31,6 +32,43 @@ namespace Oxide.Core.Libraries.Covalence
 
         // The provider
         private ICovalenceProvider provider;
+
+        // The command system provider
+        private ICommandSystemProvider cmdSystem;
+
+        // Registered commands
+        private class RegisteredCommand
+        {
+            /// <summary>
+            /// The plugin that handles the command
+            /// </summary>
+            public readonly Plugin Source;
+
+            /// <summary>
+            /// The name of the command
+            /// </summary>
+            public readonly string Command;
+
+            /// <summary>
+            /// The name of the callback
+            /// </summary>
+            public readonly string Callback;
+
+            /// <summary>
+            /// Initialises a new instance of the RegisteredCommand class
+            /// </summary>
+            /// <param name="source"></param>
+            /// <param name="command"></param>
+            /// <param name="callback"></param>
+            public RegisteredCommand(Plugin source, string command, string callback)
+            {
+                // Store fields
+                Source = source;
+                Command = command;
+                Callback = callback;
+            }
+        }
+        private IDictionary<string, RegisteredCommand> commands;
 
         // The logger
         private Logger logger;
@@ -93,6 +131,11 @@ namespace Oxide.Core.Libraries.Covalence
             // Create mediators
             Server = provider.CreateServer();
             Players = provider.CreatePlayerManager();
+            cmdSystem = provider.CreateCommandSystemProvider();
+            cmdSystem.SetCallback(CommandCallback);
+
+            // Initialise other things
+            commands = new Dictionary<string, RegisteredCommand>();
 
             // Log
             logger.Write(LogType.Info, "Using Covalence provider for game '{0}'", provider.GameName);
@@ -107,6 +150,44 @@ namespace Oxide.Core.Libraries.Covalence
         {
             if (provider == null) return string.Empty;
             return provider.GameName;
+        }
+
+        /// <summary>
+        /// Processes an incoming command
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <param name="type"></param>
+        /// <param name="caller"></param>
+        /// <param name="args"></param>
+        private bool CommandCallback(string cmd, CommandType type, IPlayer caller, string[] args)
+        {
+            // Lookup the command
+            RegisteredCommand regCmd;
+            if (!commands.TryGetValue(cmd, out regCmd))
+            {
+                // Don't route this here anymore
+                cmdSystem.DisregardInterest(cmd, type);
+                return false;
+            }
+
+            // Handle it
+            // TODO: Handle errors?
+            regCmd.Source.Call(regCmd.Callback, caller, args);
+
+            // Success
+            return true;
+        }
+
+        /// <summary>
+        /// Registers a command (chat + console)
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <param name="plugin"></param>
+        /// <param name="callback"></param>
+        [LibraryFunction("RegisterCommand")]
+        public void RegisterCommand(string cmd, Plugin plugin, string callback)
+        {
+            
         }
 
     }

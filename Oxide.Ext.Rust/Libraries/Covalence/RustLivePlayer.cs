@@ -14,7 +14,7 @@ namespace Oxide.Rust.Libraries.Covalence
         /// <summary>
         /// Gets the base player of this player
         /// </summary>
-        public IPlayer BasePlayer { get { return RustCovalenceProvider.Instance.PlayerManager.GetOfflinePlayer(steamid.ToString()); } }
+        public IPlayer BasePlayer { get { return RustCovalenceProvider.Instance.PlayerManager.GetPlayer(steamid.ToString()); } }
 
         /// <summary>
         /// Gets a reference to this player's character, if available

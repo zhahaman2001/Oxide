@@ -16,27 +16,27 @@ namespace Oxide.Core.Libraries.Covalence
         /// </summary>
         /// <param name="uniqueID"></param>
         /// <returns></returns>
-        IPlayer GetOfflinePlayer(string uniqueID);
+        IPlayer GetPlayer(string uniqueID);
 
         /// <summary>
         /// Gets all offline players
         /// </summary>
         /// <returns></returns>
-        IEnumerable<IPlayer> GetAllOfflinePlayers();
+        IEnumerable<IPlayer> GetAllPlayers();
 
         /// <summary>
         /// Finds a single offline player given a partial name (wildcards accepted, multiple matches returns null)
         /// </summary>
         /// <param name="partialName"></param>
         /// <returns></returns>
-        IPlayer FindOfflinePlayer(string partialName);
+        IPlayer FindPlayer(string partialName);
 
         /// <summary>
         /// Finds any number of offline players given a partial name (wildcards accepted)
         /// </summary>
         /// <param name="partialName"></param>
         /// <returns></returns>
-        IEnumerable<IPlayer> FindOfflinePlayers(string partialName);
+        IEnumerable<IPlayer> FindPlayers(string partialName);
 
         #endregion
 
@@ -47,27 +47,27 @@ namespace Oxide.Core.Libraries.Covalence
         /// </summary>
         /// <param name="uniqueID"></param>
         /// <returns></returns>
-        ILivePlayer GetPlayer(string uniqueID);
+        ILivePlayer GetOnlinePlayer(string uniqueID);
 
         /// <summary>
         /// Gets all online players
         /// </summary>
         /// <returns></returns>
-        IEnumerable<ILivePlayer> GetAllPlayers();
+        IEnumerable<ILivePlayer> GetAllOnlinePlayers();
 
         /// <summary>
         /// Finds a single online player given a partial name (wildcards accepted, multiple matches returns null)
         /// </summary>
         /// <param name="partialName"></param>
         /// <returns></returns>
-        ILivePlayer FindPlayer(string partialName);
+        ILivePlayer FindOnlinePlayer(string partialName);
 
         /// <summary>
         /// Finds any number of online players given a partial name (wildcards accepted)
         /// </summary>
         /// <param name="partialName"></param>
         /// <returns></returns>
-        IEnumerable<ILivePlayer> FindPlayers(string partialName);
+        IEnumerable<ILivePlayer> FindOnlinePlayers(string partialName);
 
         #endregion
 

@@ -49,6 +49,7 @@
     <Compile Include="Extensions\ExtensionManager.cs" />
     <Compile Include="Interface.cs" />
     <Compile Include="Libraries\Covalence\Covalence.cs" />
+    <Compile Include="Libraries\Covalence\ICommandSystemProvider.cs" />
     <Compile Include="Libraries\Covalence\ICovalenceProvider.cs" />
     <Compile Include="Libraries\Covalence\ILivePlayer.cs" />
     <Compile Include="Libraries\Covalence\IPlayer.cs" />
