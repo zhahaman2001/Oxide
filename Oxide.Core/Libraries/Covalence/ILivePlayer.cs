@@ -52,7 +52,7 @@ namespace Oxide.Core.Libraries.Covalence
         /// Runs the specified console command on this player's client
         /// </summary>
         /// <param name="command"></param>
-        void RunCommand(string command);
+        void RunCommand(string command, params object[] args);
 
         #endregion
     }

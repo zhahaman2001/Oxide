@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Oxide.Core.Libraries.Covalence
+using Oxide.Core;
+using Oxide.Core.Libraries.Covalence;
+
+namespace Oxide.Rust.Libraries.Covalence
 {
     /// <summary>
     /// Represents a generic player manager
@@ -18,6 +21,7 @@ namespace Oxide.Core.Libraries.Covalence
         private IDictionary<string, PlayerRecord> playerData;
 
         private IDictionary<string, RustPlayer> players;
+        private IDictionary<string, RustLivePlayer> livePlayers;
 
         internal void Initialise()
         {
@@ -28,9 +32,10 @@ namespace Oxide.Core.Libraries.Covalence
             {
                 players.Add(pair.Key, new RustPlayer(pair.Value.SteamID, pair.Value.Nickname));
             }
+            livePlayers = new Dictionary<string, RustLivePlayer>();
         }
 
-        internal void NotifyPlayerJoin(ulong steamid, string nickname)
+        private void NotifyPlayerJoin(ulong steamid, string nickname)
         {
             string uniqueID = steamid.ToString();
 
@@ -43,7 +48,8 @@ namespace Oxide.Core.Libraries.Covalence
                 playerData[uniqueID] = record;
 
                 // Swap out rust player
-                players[uniqueID] = new RustPlayer(steamid, nickname);
+                players.Remove(uniqueID);
+                players.Add(uniqueID, new RustPlayer(steamid, nickname));
             }
             else
             {
@@ -59,6 +65,17 @@ namespace Oxide.Core.Libraries.Covalence
 
             // Save
             Interface.GetMod().DataFileSystem.WriteObject("oxide.covalence.playerdata", playerData);
+        }
+
+        internal void NotifyPlayerConnect(BasePlayer ply)
+        {
+            NotifyPlayerJoin(ply.userID, ply.net.connection.username);
+            livePlayers[ply.userID.ToString()] = new RustLivePlayer(ply);
+        }
+
+        internal void NotifyPlayerDisconnect(BasePlayer ply)
+        {
+            livePlayers.Remove(ply.userID.ToString());
         }
 
         #region Offline Players
@@ -129,7 +146,11 @@ namespace Oxide.Core.Libraries.Covalence
         /// <returns></returns>
         public ILivePlayer GetPlayer(string uniqueID)
         {
-            return null;
+            RustLivePlayer player;
+            if (livePlayers.TryGetValue(uniqueID, out player))
+                return player;
+            else
+                return null;
         }
 
         /// <summary>
@@ -138,7 +159,7 @@ namespace Oxide.Core.Libraries.Covalence
         /// <returns></returns>
         public IEnumerable<ILivePlayer> GetAllPlayers()
         {
-            yield break;
+            return livePlayers.Values.Cast<ILivePlayer>();
         }
 
         /// <summary>
@@ -148,7 +169,17 @@ namespace Oxide.Core.Libraries.Covalence
         /// <returns></returns>
         public ILivePlayer FindPlayer(string partialName)
         {
-            return null;
+            // Pull 1 item and ONLY 1 item
+            // TODO: If there's an exact match, just return that regardless?
+            // That, or sort the sequence by how close the match is and return the best item
+            try
+            {
+                return FindPlayers(partialName).Single();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -158,7 +189,9 @@ namespace Oxide.Core.Libraries.Covalence
         /// <returns></returns>
         public IEnumerable<ILivePlayer> FindPlayers(string partialName)
         {
-            yield break;
+            return livePlayers.Values
+                .Where((p) => p.BasePlayer.Nickname.Contains(partialName))
+                .Cast<ILivePlayer>();
         }
 
         #endregion

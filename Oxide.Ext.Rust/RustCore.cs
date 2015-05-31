@@ -731,7 +731,18 @@ namespace Oxide.Rust.Plugins
             }
 
             // Let covalence know
-            Oxide.Rust.Libraries.Covalence.RustCovalenceProvider.Instance.PlayerManager.NotifyPlayerJoin(player.net.connection.userid, player.displayName);
+            Libraries.Covalence.RustCovalenceProvider.Instance.PlayerManager.NotifyPlayerConnect(player);
+        }
+
+        /// <summary>
+        /// Called when the player has disconnected
+        /// </summary>
+        /// <param name="player"></param>
+        [HookMethod("OnPlayerDisconnected")]
+        private void OnPlayerDisconnected(BasePlayer player)
+        {
+            // Let covalence know
+            Libraries.Covalence.RustCovalenceProvider.Instance.PlayerManager.NotifyPlayerDisconnect(player);
         }
 
         /// <summary>

@@ -1,6 +1,10 @@
 ﻿using System;
 
-namespace Oxide.Core.Libraries.Covalence
+using Oxide.Core;
+using Oxide.Core.Libraries;
+using Oxide.Core.Libraries.Covalence;
+
+namespace Oxide.Rust.Libraries.Covalence
 {
     /// <summary>
     /// Represents an Rust player, either connected or not
@@ -22,13 +26,9 @@ namespace Oxide.Core.Libraries.Covalence
         /// <summary>
         /// Gets the live player if this player is connected
         /// </summary>
-        public ILivePlayer ConnectedPlayer { get; }
+        public ILivePlayer ConnectedPlayer { get { return RustCovalenceProvider.Instance.PlayerManager.GetPlayer(UniqueID); } }
 
         private ulong steamid;
-
-        // NOTE: If this user is manipulated outside of this library, there will be issues with "stale" data
-        // We could resolve this by getting the user every time we do something from ServerUsers
-        // This could be slow?
 
         internal RustPlayer(ulong steamID, string nickname)
         {

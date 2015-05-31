@@ -485,7 +485,7 @@ end
             LoadLibrary(new LuaDatafile(LuaEnvironment), "datafile");
             if (LuaEnvironment["util"] == null)
                 LuaEnvironment.NewTable("util");
-            LoadLibrary(new LuaUtil(), "util");
+            LoadLibrary(new LuaUtil(LuaEnvironment), "util");
 
             // Bind any libraries to lua
             foreach (string name in Manager.GetLibraries())
