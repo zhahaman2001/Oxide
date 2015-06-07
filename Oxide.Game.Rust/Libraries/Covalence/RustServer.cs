@@ -3,7 +3,7 @@ using System.Net;
 
 using Oxide.Core.Libraries.Covalence;
 
-namespace Oxide.Rust.Libraries.Covalence
+namespace Oxide.Game.Rust.Libraries.Covalence
 {
     /// <summary>
     /// Represents the Rust server hosting the game instance

@@ -2,7 +2,7 @@
 
 using Oxide.Core.Libraries.Covalence;
 
-namespace Oxide.Rust.Libraries.Covalence
+namespace Oxide.Game.Rust.Libraries.Covalence
 {
     /// <summary>
     /// Represents a Rust connected player

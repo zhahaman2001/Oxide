@@ -5,7 +5,7 @@ using System.Linq;
 using Oxide.Core;
 using Oxide.Core.Libraries.Covalence;
 
-namespace Oxide.Rust.Libraries.Covalence
+namespace Oxide.Game.Rust.Libraries.Covalence
 {
     /// <summary>
     /// Represents a generic player manager
