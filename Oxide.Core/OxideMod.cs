@@ -613,7 +613,7 @@ namespace Oxide.Core
                     var currentPath = Environment.GetEnvironmentVariable("PATH") ?? string.Empty;
                     var newPath = string.IsNullOrEmpty(currentPath) ? path : currentPath + Path.PathSeparator + path;
                     Environment.SetEnvironmentVariable("PATH", newPath);
-                    //SetDllDirectory(path);
+                    SetDllDirectory(path);
                     break;
                 case PlatformID.Unix:
                 case PlatformID.MacOSX:
@@ -623,5 +623,8 @@ namespace Oxide.Core
                     break;
             }
         }
+
+        [System.Runtime.InteropServices.DllImport("kernel32", SetLastError = true)]
+        private static extern bool SetDllDirectory(string lpPathName);
     }
 }
