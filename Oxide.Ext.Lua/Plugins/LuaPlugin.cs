@@ -19,7 +19,7 @@ namespace Oxide.Ext.Lua.Plugins
         /// <summary>
         /// Gets the Lua environment
         /// </summary>
-        private NLua.Lua LuaEnvironment { get; set; }
+        internal NLua.Lua LuaEnvironment { get; set; }
 
         /// <summary>
         /// Gets this plugin's Lua table
@@ -37,15 +37,19 @@ namespace Oxide.Ext.Lua.Plugins
         // The plugin change watcher
         private FSWatcher watcher;
 
+        // The Lua extension
+        private LuaExtension luaExt;
+
         /// <summary>
         /// Initializes a new instance of the LuaPlugin class
         /// </summary>
         /// <param name="filename"></param>
-        internal LuaPlugin(string filename, NLua.Lua lua, FSWatcher watcher)
+        internal LuaPlugin(string filename, LuaExtension luaExt, FSWatcher watcher)
         {
             // Store filename
             Filename = filename;
-            LuaEnvironment = lua;
+            this.luaExt = luaExt;
+            LuaEnvironment = luaExt.LuaEnvironment;
             this.watcher = watcher;
         }
 
@@ -104,6 +108,7 @@ namespace Oxide.Ext.Lua.Plugins
             if (pluginfunc == null) throw new Exception("LoadString returned null for some reason");
             LuaEnvironment.NewTable("PLUGIN");
             Table = LuaEnvironment["PLUGIN"] as LuaTable;
+            (LuaEnvironment["setmetatable"] as LuaFunction).Call(Table, luaExt.PluginMetatable);
             Name = Path.GetFileNameWithoutExtension(Filename);
             Table["Name"] = Name;
             pluginfunc.Call();

@@ -131,8 +131,8 @@ namespace Oxide.Core.Libraries.Covalence
             // Create mediators
             Server = provider.CreateServer();
             Players = provider.CreatePlayerManager();
-            cmdSystem = provider.CreateCommandSystemProvider();
-            cmdSystem.SetCallback(CommandCallback);
+            //cmdSystem = provider.CreateCommandSystemProvider();
+            //cmdSystem.SetCallback(CommandCallback);
 
             // Initialise other things
             commands = new Dictionary<string, RegisteredCommand>();
