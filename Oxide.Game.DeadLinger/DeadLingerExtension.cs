@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 
 using Oxide.Core;
 using Oxide.Core.Extensions;
@@ -31,9 +32,33 @@ namespace Oxide.Game.DeadLinger
         public override string[] WhitelistAssemblies => new[] { "Assembly-CSharp", "mscorlib", "Oxide.Core", "System", "System.Core", "UnityEngine" };
         public override string[] WhitelistNamespaces => new[] { "Steamworks", "System.Collections", "UnityEngine" };
 
+        private static readonly MethodInfo EvalInputString = typeof (DebugConsole).GetMethod("EvalInputString", BindingFlags.Instance | BindingFlags.NonPublic);
+
         private static readonly string[] Filter =
         {
-
+            "CategoryReader Awake",
+            "Content Template count:",
+            "Duplicate category name",
+            "Duplicate entity name in the entity file:",
+            "Duplicate template name:",
+            "Entities files count:",
+            "Exception loading an entity definition.",
+            "Failed to auto generate building waypoint links",
+            "HDR RenderTexture format",
+            "LoadAllCategories()",
+            "Needs a desktop tdlDir.txt",
+            "Template:",
+            "The image effect",
+            "Wardrobe file count:",
+            "Wardrobe:",
+            "attr class =",
+            "attr name =",
+            "attr prefab =",
+            "attr ilod =",
+            "attr ilod_range =",
+            "last entity name parsed:",
+            "loadCategoryFile",
+            "prefab load"
         };
 
         /// <summary>
@@ -57,7 +82,7 @@ namespace Oxide.Game.DeadLinger
             Manager.RegisterPluginLoader(new DeadLingerPluginLoader());
 
             // Register our libraries
-            Manager.RegisterLibrary("Forest", new Libraries.DeadLinger());
+            Manager.RegisterLibrary("DeadLinger", new Libraries.DeadLinger());
         }
 
         /// <summary>
@@ -77,17 +102,18 @@ namespace Oxide.Game.DeadLinger
             if (!Interface.Oxide.EnableConsole()) return;
             Application.RegisterLogCallback(HandleLog);
             Interface.Oxide.ServerConsole.Input += ServerConsoleOnInput;
+            Application.LoadLevel("mainScene");
             // TODO: Add status information
         }
 
         private static void ServerConsoleOnInput(string input)
         {
-            // TODO
+            EvalInputString.Invoke(DebugConsole.Singleton, new object[] { input });
         }
 
         private static void HandleLog(string message, string stackTrace, LogType type)
         {
-            if (string.IsNullOrEmpty(message) || Filter.Any(message.StartsWith)) return;
+            if (string.IsNullOrEmpty(message) || Filter.Any(message.Contains)) return;
             var color = ConsoleColor.Gray;
             if (type == LogType.Warning)
                 color = ConsoleColor.Yellow;

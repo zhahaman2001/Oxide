@@ -13,38 +13,38 @@
             "Name": "InitOxide [internal]",
             "HookName": "InitOxide",
             "AssemblyName": "Assembly-CSharp.dll",
-            "TypeName": "TDLConfig",
+            "TypeName": "StartLogosReel",
             "Flagged": false,
             "Signature": {
-              "Exposure": 2,
-              "Name": "Initialize",
+              "Exposure": 0,
+              "Name": "Start",
               "ReturnType": "System.Void",
               "Parameters": []
             },
-            "MSILHash": "P7rQaq1x+u2qEStf/iPA5Y3F35P6V8lplnjOtnsJ6Mg=",
+            "MSILHash": "t8X7pzNFCdSD2cz7DmCqThDQjxNV7WQAip/WkJR3e6U=",
             "BaseHookName": null
           }
         },
         {
           "Type": "Simple",
           "Hook": {
-            "InjectionIndex": 11,
+            "InjectionIndex": 7,
             "ReturnBehavior": 0,
             "ArgumentBehavior": 0,
             "ArgumentString": null,
             "HookTypeName": "Simple",
-            "Name": "OnServerShutdown",
-            "HookName": "OnServerShutdown",
+            "Name": "InitLogging [internal]",
+            "HookName": "InitLogging",
             "AssemblyName": "Assembly-CSharp.dll",
-            "TypeName": "SteamManager",
-            "Flagged": true,
+            "TypeName": "StartLogosReel",
+            "Flagged": false,
             "Signature": {
               "Exposure": 0,
-              "Name": "OnDestroy",
+              "Name": "Start",
               "ReturnType": "System.Void",
               "Parameters": []
             },
-            "MSILHash": "pAl/gHfTAXUj42TCBel3vNurYNpqFIIRbV0HDS6Pg0k=",
+            "MSILHash": "t8X7pzNFCdSD2cz7DmCqThDQjxNV7WQAip/WkJR3e6U=",
             "BaseHookName": null
           }
         },
@@ -74,7 +74,7 @@
         {
           "Type": "Simple",
           "Hook": {
-            "InjectionIndex": 2,
+            "InjectionIndex": 0,
             "ReturnBehavior": 0,
             "ArgumentBehavior": 0,
             "ArgumentString": null,
@@ -82,7 +82,7 @@
             "Name": "OnServerShutdown",
             "HookName": "OnServerShutdown",
             "AssemblyName": "Assembly-CSharp.dll",
-            "TypeName": "TheDeadLinger",
+            "TypeName": "SteamScript",
             "Flagged": false,
             "Signature": {
               "Exposure": 0,
@@ -90,30 +90,7 @@
               "ReturnType": "System.Void",
               "Parameters": []
             },
-            "MSILHash": "R2C+KSx9Brrb3h+Q2Gx7slUlabz4Mf+WP5fdP/r1D98=",
-            "BaseHookName": null
-          }
-        },
-        {
-          "Type": "Simple",
-          "Hook": {
-            "InjectionIndex": 3,
-            "ReturnBehavior": 0,
-            "ArgumentBehavior": 0,
-            "ArgumentString": null,
-            "HookTypeName": "Simple",
-            "Name": "InitLogging [internal]",
-            "HookName": "InitLogging",
-            "AssemblyName": "Assembly-CSharp.dll",
-            "TypeName": "TDLConfig",
-            "Flagged": false,
-            "Signature": {
-              "Exposure": 2,
-              "Name": "Initialize",
-              "ReturnType": "System.Void",
-              "Parameters": []
-            },
-            "MSILHash": "P7rQaq1x+u2qEStf/iPA5Y3F35P6V8lplnjOtnsJ6Mg=",
+            "MSILHash": "CJ2cr0mnevOumPXQmXSh1nSmdOiN4MM9xG7a+TTxcBI=",
             "BaseHookName": null
           }
         }
