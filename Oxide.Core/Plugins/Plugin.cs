@@ -110,7 +110,7 @@ namespace Oxide.Core.Plugins
         // The depth of hook call nesting
         protected int nestcount;
 
-        private struct CommandInfo
+        private class CommandInfo
         {
             public readonly string[] Names;
             public readonly string[] PermissionsRequired;
@@ -118,13 +118,13 @@ namespace Oxide.Core.Plugins
 
             public CommandInfo(string[] names, string[] perms, CommandCallback callback)
             {
-                this.Names = names;
-                this.PermissionsRequired = perms;
-                this.Callback = callback;
+                Names = names;
+                PermissionsRequired = perms;
+                Callback = callback;
             }
         }
 
-        private HashSet<CommandInfo> commandInfos;
+        private IDictionary<string, CommandInfo> commandInfos;
 
         /// <summary>
         /// Initializes an empty version of the Plugin class
@@ -135,7 +135,7 @@ namespace Oxide.Core.Plugins
             Title = "Base Plugin";
             Author = "System";
             Version = new VersionNumber(1, 0, 0);
-            commandInfos = new HashSet<CommandInfo>();
+            commandInfos = new Dictionary<string, CommandInfo>();
         }
 
         /// <summary>
@@ -156,6 +156,7 @@ namespace Oxide.Core.Plugins
             Manager = manager;
             if (HasConfig) LoadConfig();
             if (OnAddedToManager != null) OnAddedToManager(this, manager);
+            RegisterWithCovalence();
         }
 
         /// <summary>
@@ -164,6 +165,7 @@ namespace Oxide.Core.Plugins
         /// <param name="manager"></param>
         public virtual void HandleRemovedFromManager(PluginManager manager)
         {
+            UnregisterWithCovalence();
             if (Manager == manager) Manager = null;
             if (OnRemovedFromManager != null) OnRemovedFromManager(this, manager);
         }
@@ -311,7 +313,54 @@ namespace Oxide.Core.Plugins
 
         protected void AddCovalenceCommand(string[] commands, string[] perms, CommandCallback callback)
         {
-            commandInfos.Add(new CommandInfo(commands, perms, callback));
+            foreach (var cmdName in commands)
+                commandInfos.Add(cmdName, new CommandInfo(commands, perms, callback));
+        }
+
+        private void RegisterWithCovalence()
+        {
+            var covalence = Interface.GetMod().GetLibrary<Covalence>();
+            foreach (var pair in commandInfos)
+            {
+                covalence.RegisterCommand(pair.Key, CovalenceCommandCallback);
+            }
+        }
+
+        private bool CovalenceCommandCallback(string cmd, CommandType type, IPlayer caller, string[] args)
+        {
+            // Get the command
+            CommandInfo cmdInfo;
+            if (!commandInfos.TryGetValue(cmd, out cmdInfo)) return false;
+
+            // Check for permissions
+            if (caller == null)
+            {
+                Interface.Oxide.LogWarning("Plugin.CovalenceCommandCallback received null as the caller (bad game Covalence bindings?)");
+                return false;
+            }
+            foreach (var perm in cmdInfo.PermissionsRequired)
+            {
+                if (!caller.HasPermission(perm))
+                {
+                    caller.ConnectedPlayer?.SendChatMessage(string.Format("Missing permission '{0}' to run command '{1}'!", perm, cmd));
+                    return true;
+                }
+            }
+
+            // Call it
+            cmdInfo.Callback(cmd, type, caller, args);
+
+            // Handled
+            return true;
+        }
+
+        private void UnregisterWithCovalence()
+        {
+            var covalence = Interface.GetMod().GetLibrary<Covalence>();
+            foreach (var pair in commandInfos)
+            {
+                covalence.UnregisterCommand(pair.Key);
+            }
         }
 
         #endregion

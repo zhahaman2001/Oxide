@@ -27,6 +27,6 @@ namespace Oxide.Core.Libraries.Covalence
         /// Creates the game-specific command system provider object
         /// </summary>
         /// <returns></returns>
-        ICommandSystemProvider CreateCommandSystemProvider();
+        ICommandSystem CreateCommandSystemProvider();
     }
 }

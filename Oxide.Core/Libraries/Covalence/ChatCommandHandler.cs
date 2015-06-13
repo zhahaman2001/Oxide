@@ -68,7 +68,7 @@ namespace Oxide.Core.Libraries.Covalence
             if (callback == null) return false;
 
             // Handle
-            return callback(cmd, CommandType.Chat, player.BasePlayer, args);
+            return callback(cmd, CommandType.Chat, player?.BasePlayer, args);
         }
 
         /// <summary>

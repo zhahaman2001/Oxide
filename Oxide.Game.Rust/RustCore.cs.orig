@@ -615,13 +615,6 @@ namespace Oxide.Game.Rust
 
             if (arg.cmd.namefull == "chat.say")
             {
-                if (arg.connection != null)
-                {
-                    var rustCovalence = Libraries.Covalence.RustCovalenceProvider.Instance;
-                    var livePlayer = rustCovalence.PlayerManager.GetOnlinePlayer(arg.connection.userid.ToString());
-                    if (rustCovalence.CommandSystem.HandleChatMessage(livePlayer, arg.GetString(0, ""))) return true;
-                }
-
                 // Get the args
                 string str = arg.GetString(0, "text");
                 if (str.Length == 0) return null;
@@ -724,17 +717,23 @@ namespace Oxide.Game.Rust
         [HookMethod("OnPlayerInit")]
         private void OnPlayerInit(BasePlayer player)
         {
+            var authLevel = player.net.connection.authLevel;
+<<<<<<< HEAD
+            if (authLevel <= DefaultGroups.Length && permission.IsLoaded)
+            {
+                var userId = player.userID.ToString();
+                permission.GetUserData(userId).LastSeenNickname = player.displayName;
+
+                // Remove player from old groups if auth level changed
+                for (var i = 0; i < DefaultGroups.Length; i++)
+                    if (i != authLevel) permission.RemoveUserGroup(userId, DefaultGroups[i]);
+
+                // Add player to default group
+                permission.AddUserGroup(userId, DefaultGroups[authLevel]);
+            }
+
             // Let covalence know
             Libraries.Covalence.RustCovalenceProvider.Instance.PlayerManager.NotifyPlayerConnect(player);
-
-            // Do permission stuff
-            var authLevel = player.net.connection.authLevel;
-            if (authLevel > DefaultGroups.Length || !permission.IsLoaded) return;
-            var userId = player.userID.ToString();
-            var userData = permission.GetUserData(userId);
-            userData.LastSeenNickname = player.displayName;
-            if (userData.Groups.Count > 0) return;
-            permission.AddUserGroup(userId, DefaultGroups[authLevel]);
         }
 
         /// <summary>
@@ -746,6 +745,14 @@ namespace Oxide.Game.Rust
         {
             // Let covalence know
             Libraries.Covalence.RustCovalenceProvider.Instance.PlayerManager.NotifyPlayerDisconnect(player);
+=======
+            if (authLevel > DefaultGroups.Length || !permission.IsLoaded) return;
+            var userId = player.userID.ToString();
+            var userData = permission.GetUserData(userId);
+            userData.LastSeenNickname = player.displayName;
+            if (userData.Groups.Count > 0) return;
+            permission.AddUserGroup(userId, DefaultGroups[authLevel]);
+>>>>>>> master
         }
 
         /// <summary>

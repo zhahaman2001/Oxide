@@ -3,6 +3,8 @@ using System.Net;
 
 using Oxide.Core.Libraries.Covalence;
 
+using ConVar;
+
 namespace Oxide.Game.Rust.Libraries.Covalence
 {
     /// <summary>
@@ -17,7 +19,7 @@ namespace Oxide.Game.Rust.Libraries.Covalence
         {
             get
             {
-                return server.identity;
+                return Server.identity;
             }
         }
 
@@ -45,7 +47,7 @@ namespace Oxide.Game.Rust.Libraries.Covalence
         {
             get
             {
-                return (ushort)server.port;
+                return (ushort)Server.port;
             }
         }
 

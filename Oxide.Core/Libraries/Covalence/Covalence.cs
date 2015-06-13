@@ -34,7 +34,7 @@ namespace Oxide.Core.Libraries.Covalence
         private ICovalenceProvider provider;
 
         // The command system provider
-        private ICommandSystemProvider cmdSystem;
+        private ICommandSystem cmdSystem;
 
         // Registered commands
         private class RegisteredCommand
@@ -69,6 +69,19 @@ namespace Oxide.Core.Libraries.Covalence
             }
         }
         private IDictionary<string, RegisteredCommand> commands;
+
+        /// <summary>
+        /// Gets the name of the current game
+        /// </summary>
+        [LibraryProperty("Game")]
+        public string Game
+        {
+            get
+            {
+                if (provider == null) return string.Empty;
+                return provider.GameName;
+            }
+        }
 
         // The logger
         private Logger logger;
@@ -131,8 +144,7 @@ namespace Oxide.Core.Libraries.Covalence
             // Create mediators
             Server = provider.CreateServer();
             Players = provider.CreatePlayerManager();
-            //cmdSystem = provider.CreateCommandSystemProvider();
-            //cmdSystem.SetCallback(CommandCallback);
+            cmdSystem = provider.CreateCommandSystemProvider();
 
             // Initialise other things
             commands = new Dictionary<string, RegisteredCommand>();
@@ -142,52 +154,27 @@ namespace Oxide.Core.Libraries.Covalence
         }
 
         /// <summary>
-        /// Returns the name of the current game
-        /// </summary>
-        /// <returns></returns>
-        [LibraryFunction("GetGame")]
-        public string GetGame()
-        {
-            if (provider == null) return string.Empty;
-            return provider.GameName;
-        }
-
-        /// <summary>
-        /// Processes an incoming command
-        /// </summary>
-        /// <param name="cmd"></param>
-        /// <param name="type"></param>
-        /// <param name="caller"></param>
-        /// <param name="args"></param>
-        private bool CommandCallback(string cmd, CommandType type, IPlayer caller, string[] args)
-        {
-            // Lookup the command
-            RegisteredCommand regCmd;
-            if (!commands.TryGetValue(cmd, out regCmd))
-            {
-                // Don't route this here anymore
-                cmdSystem.DisregardInterest(cmd, type);
-                return false;
-            }
-
-            // Handle it
-            // TODO: Handle errors?
-            regCmd.Source.Call(regCmd.Callback, caller, args);
-
-            // Success
-            return true;
-        }
-
-        /// <summary>
         /// Registers a command (chat + console)
         /// </summary>
         /// <param name="cmd"></param>
-        /// <param name="plugin"></param>
         /// <param name="callback"></param>
-        [LibraryFunction("RegisterCommand")]
-        public void RegisterCommand(string cmd, Plugin plugin, string callback)
+        public void RegisterCommand(string cmd, CommandCallback callback)
         {
-            
+            logger.Write(LogType.Debug, "Covalence is registering command '{0}'!", cmd);
+            cmdSystem.RegisterCommand(cmd, CommandType.Chat, callback);
+            cmdSystem.RegisterCommand(cmd, CommandType.Console, callback);
+        }
+
+        /// <summary>
+        /// Unregisters a command (chat + console)
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <param name="callback"></param>
+        public void UnregisterCommand(string cmd)
+        {
+            logger.Write(LogType.Debug, "Covalence is unregistering command '{0}'!", cmd);
+            cmdSystem.UnregisterCommand(cmd, CommandType.Chat);
+            cmdSystem.UnregisterCommand(cmd, CommandType.Console);
         }
 
     }
