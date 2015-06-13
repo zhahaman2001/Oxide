@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 
 using Oxide.Core.Configuration;
+using Oxide.Core.Libraries.Covalence;
 
 namespace Oxide.Core.Plugins
 {
@@ -108,6 +110,22 @@ namespace Oxide.Core.Plugins
         // The depth of hook call nesting
         protected int nestcount;
 
+        private struct CommandInfo
+        {
+            public readonly string[] Names;
+            public readonly string[] PermissionsRequired;
+            public readonly CommandCallback Callback;
+
+            public CommandInfo(string[] names, string[] perms, CommandCallback callback)
+            {
+                this.Names = names;
+                this.PermissionsRequired = perms;
+                this.Callback = callback;
+            }
+        }
+
+        private HashSet<CommandInfo> commandInfos;
+
         /// <summary>
         /// Initializes an empty version of the Plugin class
         /// </summary>
@@ -117,6 +135,7 @@ namespace Oxide.Core.Plugins
             Title = "Base Plugin";
             Author = "System";
             Version = new VersionNumber(1, 0, 0);
+            commandInfos = new HashSet<CommandInfo>();
         }
 
         /// <summary>
@@ -284,6 +303,15 @@ namespace Oxide.Core.Plugins
             {
                 RaiseError(string.Format("Failed to save config file (does the config have illegal objects in it?) ({0})", ex.Message));
             }
+        }
+
+        #endregion
+
+        #region Covalence
+
+        protected void AddCovalenceCommand(string[] commands, string[] perms, CommandCallback callback)
+        {
+            commandInfos.Add(new CommandInfo(commands, perms, callback));
         }
 
         #endregion

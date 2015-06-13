@@ -170,7 +170,7 @@ end
         attribArr = {}
         rawset( self, '_attribArr', attribArr )
     end
-    activeAttrib.func = value
+    activeAttrib._func = value
     attribArr[#attribArr + 1] = activeAttrib
     rawset( self, '_activeAttrib', nil )
 end
