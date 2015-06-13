@@ -8,7 +8,7 @@
         {
           "Type": "InitOxide",
           "Hook": {
-            "InjectionIndex": 9,
+            "InjectionIndex": 10,
             "HookTypeName": "Initialize Oxide",
             "Name": "InitOxide [internal]",
             "HookName": "InitOxide",
@@ -21,7 +21,7 @@
               "ReturnType": "System.Void",
               "Parameters": []
             },
-            "MSILHash": "fw6KvgrDe7ZdyatWZ0L0nPVzlbN5XeJW1tfG/0LAWYY=",
+            "MSILHash": "duxytUjZ63dsldcVlddUlNVqB4g0PTMXPSApJT8a7G8=",
             "BaseHookName": null
           }
         },
@@ -90,7 +90,7 @@
               "ReturnType": "System.Void",
               "Parameters": []
             },
-            "MSILHash": "60rj5fEwosbkMBBsbU6wImwNIQHnF66d24Nwit4XEfU=",
+            "MSILHash": "YpmBcj8ttFYM5A0uUEuB+EkjZzNaxJ4rlWS745k+06g=",
             "BaseHookName": null
           }
         },
@@ -286,7 +286,7 @@
                 "Network.Connection"
               ]
             },
-            "MSILHash": "xuIOCKMSA89UR3WF/ZmafvnQRS7AnBqnLjmkzO+kab4=",
+            "MSILHash": "A/DuHrIM+jiB8um8u+wWgnRHQ2HKMxzPTJT3QWIeFjo=",
             "BaseHookName": null
           }
         },
@@ -465,31 +465,6 @@
               ]
             },
             "MSILHash": "3khIy8QRoeLUeq63XsJwu5daBVi7jBW64KJ+K5uHeDw=",
-            "BaseHookName": null
-          }
-        },
-        {
-          "Type": "Simple",
-          "Hook": {
-            "InjectionIndex": 0,
-            "ReturnBehavior": 1,
-            "ArgumentBehavior": 2,
-            "ArgumentString": null,
-            "HookTypeName": "Simple",
-            "Name": "OnPlayerChat",
-            "HookName": "OnPlayerChat",
-            "AssemblyName": "Assembly-CSharp.dll",
-            "TypeName": "chat",
-            "Flagged": false,
-            "Signature": {
-              "Exposure": 2,
-              "Name": "say",
-              "ReturnType": "System.Void",
-              "Parameters": [
-                "ConsoleSystem/Arg"
-              ]
-            },
-            "MSILHash": "CggacqkaE02KcRz+TpqTdQy+w1fEgXOUx4m0GhFC9Dk=",
             "BaseHookName": null
           }
         },
@@ -719,7 +694,7 @@
                 "HitInfo"
               ]
             },
-            "MSILHash": "BASQkKIEJNJfS7OysdTSwnvd2B6rqHTiAX4TTIoicy4=",
+            "MSILHash": "LrGybN8Vr07mLux1i8h0tbntcSt8ZAGLy1xZvJ0Ulbw=",
             "BaseHookName": null
           }
         },
@@ -745,7 +720,7 @@
                 "System.Boolean"
               ]
             },
-            "MSILHash": "tG02bhfGfmrV4FTKMRDMWo7cjNevg7nQMPcSnNrin+I=",
+            "MSILHash": "ROO5mhc8jJIEznrt2QvSgy97KXXa4I/GEuMsqwhgoGo=",
             "BaseHookName": null
           }
         },
@@ -772,7 +747,7 @@
                 "System.Boolean"
               ]
             },
-            "MSILHash": "uiRiGLjV2PGPiPWYVIER6fciM+PAz290y5lI4yF5EjI=",
+            "MSILHash": "KX/V9UQ+NFvu1KO9DC3K/HwSsTI8aRXKSlpZG6k4rLM=",
             "BaseHookName": null
           }
         },
@@ -862,31 +837,6 @@
             "ArgumentBehavior": 0,
             "ArgumentString": null,
             "HookTypeName": "Simple",
-            "Name": "OnServerQuit [deprecated]",
-            "HookName": "OnServerQuit",
-            "AssemblyName": "Assembly-CSharp.dll",
-            "TypeName": "ConsoleGlobal",
-            "Flagged": false,
-            "Signature": {
-              "Exposure": 2,
-              "Name": "quit",
-              "ReturnType": "System.Void",
-              "Parameters": [
-                "ConsoleSystem/Arg"
-              ]
-            },
-            "MSILHash": "pQHSwlF16ryoSGj7uyrJWaG9QuX5nV8Ssk5+krmZRlI=",
-            "BaseHookName": null
-          }
-        },
-        {
-          "Type": "Simple",
-          "Hook": {
-            "InjectionIndex": 0,
-            "ReturnBehavior": 0,
-            "ArgumentBehavior": 0,
-            "ArgumentString": null,
-            "HookTypeName": "Simple",
             "Name": "OnServerSave",
             "HookName": "OnServerSave",
             "AssemblyName": "Assembly-CSharp.dll",
@@ -898,30 +848,7 @@
               "ReturnType": "System.Void",
               "Parameters": []
             },
-            "MSILHash": "4YhzGHYyXEyoGNxLrp5G5YHWZS4LbyXL9qBc9dENySA=",
-            "BaseHookName": null
-          }
-        },
-        {
-          "Type": "Simple",
-          "Hook": {
-            "InjectionIndex": 0,
-            "ReturnBehavior": 3,
-            "ArgumentBehavior": 1,
-            "ArgumentString": null,
-            "HookTypeName": "Simple",
-            "Name": "OnConsumableUse",
-            "HookName": "OnConsumableUse",
-            "AssemblyName": "Assembly-CSharp.dll",
-            "TypeName": "Item",
-            "Flagged": false,
-            "Signature": {
-              "Exposure": 2,
-              "Name": "UseOneItem",
-              "ReturnType": "System.Void",
-              "Parameters": []
-            },
-            "MSILHash": "goBb3GJtrD+2nYIYO9w5/VtRp66rmkN9y03hV0vbCss=",
+            "MSILHash": "HpYyDz3oli29vd8E2HlMvNcVyexM15iZycKtEG3u6vI=",
             "BaseHookName": null
           }
         },
@@ -1026,7 +953,7 @@
                 "System.Single"
               ]
             },
-            "MSILHash": "AupnvNWhCU2TP8ZO0FcuxoTh/ys6u0dytIc1COgXTuA=",
+            "MSILHash": "qyemkNZTQ7v94do/GO8LB376vZu22EH0J2iyjx4bopg=",
             "BaseHookName": null
           }
         },
@@ -1051,7 +978,7 @@
                 "Network.Connection"
               ]
             },
-            "MSILHash": "njNF/MUGoJDsEGTM9Bt/EQ8R2azPV+hONHFn6w1syMQ=",
+            "MSILHash": "t+GOOlQdkJeRzyr8n0v0gBEgx9Kr9mmQQHBC8YyDNw8=",
             "BaseHookName": null
           }
         },
@@ -1175,7 +1102,7 @@
                 "ItemModBurnable"
               ]
             },
-            "MSILHash": "n6TJImSm0Im4OJnz8d88wc3thV4lpLzHqQtQpDOkvZs=",
+            "MSILHash": "JH7XasPgAgPsaX7rfF0TTivlNXD7bMeFpvaE53v00U8=",
             "BaseHookName": null
           }
         },
@@ -1275,7 +1202,7 @@
                 "System.Single"
               ]
             },
-            "MSILHash": "RY+xhlAthAwFiNxy4cFkPjJfuI6BEyfG9+/tBbJSr7k=",
+            "MSILHash": "6w7DXPSPK5l++p8pZ2orIjzv8Ekd912t2XPq5pRi4s0=",
             "BaseHookName": null
           }
         },
@@ -1448,7 +1375,7 @@
                 "System.Boolean"
               ]
             },
-            "MSILHash": "O1cwvd67rgjxIRnX4mPwIjcHmuv3YGZb5Rs5fvhKA+k=",
+            "MSILHash": "2nPCiNWmCdC3azRs2w6L0c7c614Eo8zpGp1MnezZNZE=",
             "BaseHookName": null
           }
         },
@@ -1498,7 +1425,7 @@
                 "ItemCraftTask"
               ]
             },
-            "MSILHash": "KNJjCVn/jMI0TqL+JtR4emL9B7Jq6jw2d6kV5BFgeQ0=",
+            "MSILHash": "TeYT0hH01iBiB/0A6snCYGZjdAFapVz+UqsJXdo0lFY=",
             "BaseHookName": null
           }
         },
@@ -1791,6 +1718,56 @@
               ]
             },
             "MSILHash": "Z0sAsUNkyKCQLEW7HJ1Y30QNYqEZ9EZMglaVvI/FLAM=",
+            "BaseHookName": null
+          }
+        },
+        {
+          "Type": "Simple",
+          "Hook": {
+            "InjectionIndex": 0,
+            "ReturnBehavior": 0,
+            "ArgumentBehavior": 3,
+            "ArgumentString": null,
+            "HookTypeName": "Simple",
+            "Name": "OnConsumableUse",
+            "HookName": "OnConsumableUse",
+            "AssemblyName": "Assembly-CSharp.dll",
+            "TypeName": "Item",
+            "Flagged": false,
+            "Signature": {
+              "Exposure": 2,
+              "Name": "UseItem",
+              "ReturnType": "System.Void",
+              "Parameters": [
+                "System.Int32"
+              ]
+            },
+            "MSILHash": "8LlQVWuYP7WPocZtichmuJDdVbq7NKLmOAkqb0ST3+M=",
+            "BaseHookName": null
+          }
+        },
+        {
+          "Type": "Simple",
+          "Hook": {
+            "InjectionIndex": 0,
+            "ReturnBehavior": 1,
+            "ArgumentBehavior": 2,
+            "ArgumentString": null,
+            "HookTypeName": "Simple",
+            "Name": "OnPlayerChat",
+            "HookName": "OnPlayerChat",
+            "AssemblyName": "Assembly-CSharp.dll",
+            "TypeName": "ConVar.Chat",
+            "Flagged": false,
+            "Signature": {
+              "Exposure": 2,
+              "Name": "say",
+              "ReturnType": "System.Void",
+              "Parameters": [
+                "ConsoleSystem/Arg"
+              ]
+            },
+            "MSILHash": "yHXbEgMiPSCNeEEH48Ty5l+loTQUWYPXjwWoLLERj+A=",
             "BaseHookName": null
           }
         }
