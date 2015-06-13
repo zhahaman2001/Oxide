@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
+using Oxide.Core;
 using Oxide.Core.Libraries.Covalence;
 
 namespace Oxide.Game.Rust.Libraries.Covalence
@@ -20,6 +21,9 @@ namespace Oxide.Game.Rust.Libraries.Covalence
         // All registered chat commands
         private IDictionary<string, CommandCallback> registeredChatCommands;
 
+        // The console player
+        private RustConsolePlayer consolePlayer;
+
         /// <summary>
         /// Initialises the command system provider
         /// </summary>
@@ -28,6 +32,7 @@ namespace Oxide.Game.Rust.Libraries.Covalence
             rustcommands = typeof(ConsoleSystem.Index).GetField("dictionary", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as IDictionary<string, ConsoleSystem.Command>;
             registeredChatCommands = new Dictionary<string, CommandCallback>();
             chatCommandHandler = new ChatCommandHandler(ChatCommandCallback, registeredChatCommands.ContainsKey);
+            consolePlayer = new RustConsolePlayer();
         }
 
         private bool ChatCommandCallback(string cmd, CommandType type, IPlayer caller, string[] args)
@@ -53,16 +58,45 @@ namespace Oxide.Game.Rust.Libraries.Covalence
             // Is it a console command?
             if (type == CommandType.Console)
             {
-                // TODO: Add console command to rustcommands
-                /*rustcommands.Add(cmd, new ConsoleSystem.Command()
+                // Check if it already exists
+                if (rustcommands.ContainsKey(cmd))
                 {
+                    throw new CommandAlreadyExistsException(cmd);
+                }
 
-                });*/
+                // Register it
+                string[] splitName = cmd.Split('.');
+                rustcommands.Add(cmd, new ConsoleSystem.Command
+                {
+                    name = splitName.Length >= 2 ? splitName[1] : splitName[0],
+                    parent = splitName.Length >= 2 ? splitName[0] : string.Empty,
+                    namefull = cmd,
+                    isCommand = true,
+                    isUser = true,
+                    isAdmin = true,
+                    GetString = () => string.Empty,
+                    SetString = (s) => { },
+                    Call = (arg) =>
+                    {
+                        if (arg == null) return;
+                        callback(cmd, CommandType.Console, consolePlayer, ExtractArgs(arg));
+                    }
+                });
             }
             else if (type == CommandType.Chat)
             {
                 registeredChatCommands.Add(cmd, callback);
             }
+        }
+
+        private static string[] ExtractArgs(ConsoleSystem.Arg arg)
+        {
+            if (arg == null) return new string[0];
+            List<string> argsList = new List<string>();
+            int i = 0;
+            while (arg.HasArgs(++i))
+                argsList.Add(arg.GetString(i - 1));
+            return argsList.ToArray();
         }
 
         /// <summary>
@@ -79,7 +113,8 @@ namespace Oxide.Game.Rust.Libraries.Covalence
             // Is it a console command?
             if (type == CommandType.Console)
             {
-                // TODO: Remove console command from rustcommands (check if we "own" it!)
+                // Unregister it
+                rustcommands.Remove(cmd);
             }
             else if (type == CommandType.Chat)
             {

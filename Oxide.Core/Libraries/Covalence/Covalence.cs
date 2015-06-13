@@ -160,9 +160,15 @@ namespace Oxide.Core.Libraries.Covalence
         /// <param name="callback"></param>
         public void RegisterCommand(string cmd, CommandCallback callback)
         {
-            logger.Write(LogType.Debug, "Covalence is registering command '{0}'!", cmd);
-            cmdSystem.RegisterCommand(cmd, CommandType.Chat, callback);
-            cmdSystem.RegisterCommand(cmd, CommandType.Console, callback);
+            try
+            {
+                cmdSystem.RegisterCommand(cmd, CommandType.Chat, callback);
+                cmdSystem.RegisterCommand(cmd, CommandType.Console, callback);
+            }
+            catch (CommandAlreadyExistsException)
+            {
+                logger.Write(LogType.Error, "Tried to register command '{0}', already exists!", cmd);
+            }
         }
 
         /// <summary>
